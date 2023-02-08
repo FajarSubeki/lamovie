@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:profile/presentation/widgets/button_widget.dart';
 import 'package:profile/presentation/widgets/profile_widget.dart';
 import 'package:core/core.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);

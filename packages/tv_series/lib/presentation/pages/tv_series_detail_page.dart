@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv_series/presentation/blocs/detail/detail_tv_series_bloc.dart';
 import 'package:tv_series/presentation/blocs/recommendation/recommendation_tv_series_bloc.dart';
+import 'package:tv_series/presentation/blocs/review/review_tv_series_bloc.dart';
 
 class TvSeriesDetailPage extends StatefulWidget {
   final int id;
@@ -28,6 +29,9 @@ class _TvSeriesDetailPageState extends State<TvSeriesDetailPage> {
       context
           .read<RecommendationTvSeriesBloc>()
           .add(FetchRecommendationTvSeries(id));
+      context
+          .read<ReviewTvSeriesBloc>()
+          .add(FetchReviewTvSeries(id));
     });
   }
 
@@ -118,6 +122,45 @@ class DetailContent extends StatelessWidget {
                             ),
                             const SizedBox(height: 16),
                             Text(
+                              'Reviews',
+                              style: kHeading6,
+                            ),
+                            BlocBuilder<ReviewTvSeriesBloc,
+                                ReviewTvSeriesState>(
+                              builder: (_, state) {
+                                if (state is ReviewTvSeriesLoading) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                } else if (state
+                                is ReviewTvSeriesHasData) {
+                                  return TvSeriesReviewList(
+                                    reviewList: state.result,
+                                  );
+                                } else if (state
+                                is ReviewTvSeriesError) {
+                                  return Center(
+                                    child: Text(state.message),
+                                  );
+                                } else {
+                                  return Container(
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: const [
+                                          Icon(Icons.tv_off),
+                                          SizedBox(height: 2),
+                                          Text('No Reviews'),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
                               'Recommendations',
                               style: kHeading6,
                             ),
@@ -140,11 +183,6 @@ class DetailContent extends StatelessWidget {
                                   );
                                 } else {
                                   return Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[800],
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    height: 150,
                                     child: Center(
                                       child: Column(
                                         mainAxisAlignment:
@@ -212,6 +250,37 @@ class DetailContent extends StatelessWidget {
 
     return result.substring(0, result.length - 2);
   }
+}
+
+class TvSeriesReviewList extends StatelessWidget{
+
+  final List<Review> reviewList;
+
+  const TvSeriesReviewList({required this.reviewList, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return LimitedBox(
+      maxHeight: 500.0,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemBuilder: (BuildContext context, int index) {
+          final review = reviewList[index];
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundImage:
+              NetworkImage(urlUserImage),
+              backgroundColor: kMikadoYellow,
+            ),
+            title: Text('${review.author}'),
+            subtitle: Text('${review.content}'),
+          );
+        },
+        itemCount: reviewList.length,
+      ),
+    );
+  }
+
 }
 
 class TvSeriesRecommendationList extends StatelessWidget {

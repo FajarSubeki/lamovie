@@ -154,7 +154,7 @@ class DetailContent extends StatelessWidget {
                                           leading: CircleAvatar(
                                             backgroundImage:
                                             NetworkImage(urlUserImage),
-                                            backgroundColor: Colors.cyan,
+                                            backgroundColor: kMikadoYellow,
                                           ),
                                           title: Text('${review.author}'),
                                           subtitle: Text('${review.content}'),
@@ -163,36 +163,6 @@ class DetailContent extends StatelessWidget {
                                       itemCount: reviews.length,
                                     ),
                                   );
-                                  // return ListView.builder(
-                                  //     itemBuilder: (context, index) {
-                                  //       final review = reviews[index];
-                                  //       return Container(
-                                  //         height: 120,
-                                  //           child: Card(
-                                  //             elevation: 3,
-                                  //             child: Padding(
-                                  //               padding: const EdgeInsets.all(16),
-                                  //               child: Column(
-                                  //                 mainAxisSize: MainAxisSize.min,
-                                  //                 children: [
-                                  //                   Text(
-                                  //                       'From : ${review.author}'
-                                  //                   ),
-                                  //                   Text(
-                                  //                       'Rating : ${review.authorDetails?.rating}'
-                                  //                   ),
-                                  //                   Text(
-                                  //                       '${review.content}'
-                                  //                   )
-                                  //                 ],
-                                  //               ),
-                                  //             ),
-                                  //           ),
-                                  //       );
-                                  //     },
-                                  //     itemCount: reviews.length,
-                                  //   );
-
                                 } else if (reviewsState ==
                                     RequestState.error) {
                                   return Text(state.message);

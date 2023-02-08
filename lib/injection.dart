@@ -15,10 +15,12 @@ import 'package:tv_series/domain/usecases/get_detail_tv_series.dart';
 import 'package:tv_series/domain/usecases/get_on_the_air_tv_series.dart';
 import 'package:tv_series/domain/usecases/get_popular_tv_series.dart';
 import 'package:tv_series/domain/usecases/get_recommendation_tv_series.dart';
+import 'package:tv_series/domain/usecases/get_review_tv_series.dart';
 import 'package:tv_series/presentation/blocs/detail/detail_tv_series_bloc.dart';
 import 'package:tv_series/presentation/blocs/on_the_air/on_the_air_tv_series_bloc.dart';
 import 'package:tv_series/presentation/blocs/popular/popular_tv_series_bloc.dart';
 import 'package:tv_series/presentation/blocs/recommendation/recommendation_tv_series_bloc.dart';
+import 'package:tv_series/presentation/blocs/review/review_tv_series_bloc.dart';
 import 'package:core/data/repositories/movie_repository_impl.dart';
 import 'package:core/data/repositories/tv_series_repository_impl.dart';
 import 'package:core/domain/repositories/movie_repository.dart';
@@ -48,6 +50,7 @@ void init() {
   locator.registerFactory(() => PopularTvSeriesBloc(locator()));
   locator.registerFactory(() => DetailTvSeriesBloc(locator()));
   locator.registerFactory(() => RecommendationTvSeriesBloc(locator()));
+  locator.registerFactory(() => ReviewTvSeriesBloc(locator()));
 
 
   // use case movies
@@ -63,6 +66,8 @@ void init() {
   locator.registerLazySingleton(() => GetPopularTvSeries(locator()));
   locator.registerLazySingleton(() => GetDetailTvSeries(locator()));
   locator.registerLazySingleton(() => GetRecommendationTvSeries(locator()));
+  locator.registerLazySingleton(() => GetReviewTvSeries(locator()));
+
 
   // repository
   locator.registerLazySingleton<MovieRepository>(

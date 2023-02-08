@@ -70,7 +70,7 @@ class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
   @override
   Future<List<ReviewModel>> getReview(int id) async {
     final response = await client
-        .get(Uri.parse('$baseUrl/movie/$id/reviews?$apiKey'));
+        .get(Uri.parse('$baseUrl/tv/$id/reviews?$apiKey'));
 
     if (response.statusCode == 200) {
       return ReviewResponse.fromJson(json.decode(response.body)).reviewList;
